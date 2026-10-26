@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Khoj — Multilingual AI Lost & Found | IIT Kanpur</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            saffron: {
+              50: '#fff7ed',
+              100: '#ffedd5',
+              200: '#fed7aa',
+              500: '#f97316',
+              600: '#ea580c',
+              700: '#c2410c'
+            },
+            navy: {
+              800: '#1e293b',
+              900: '#0f172a',
+              950: '#020617'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body class="bg-[#faf8f5] text-navy-900 min-h-screen flex flex-col antialiased selection:bg-orange-500 selection:text-white">
+
+  <!-- Top Announcement / Sarvam Status Bar -->
+  <header class="bg-white border-b border-slate-200/80 sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        
+        <!-- Brand Logo -->
+        <div class="flex items-center gap-3">
+          <a href="#" data-nav="landing" class="flex items-center gap-2.5">
+            <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-orange-600 to-amber-500 flex items-center justify-center text-white shadow-md shadow-orange-500/20">
+              <i data-lucide="compass" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-1.5">
+                <span class="text-xl font-black tracking-tight text-navy-950 font-sans">KHOJ</span>
+                <span class="text-[10px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded bg-orange-100 text-orange-800">IITK</span>
+              </div>
+              <p class="text-[10px] text-slate-500 font-medium">Multilingual Campus Lost & Found</p>
+            </div>
+          </a>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center gap-1">
+          <button data-nav="landing" class="nav-link px-3.5 py-2 rounded-xl text-xs font-semibold text-orange-600 hover:text-orange-600 hover:bg-orange-50/60 transition">
+            Home
+          </button>
+          <button data-nav="browse" class="nav-link px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-orange-600 hover:bg-orange-50/60 transition">
+            Browse Reports
+          </button>
+          <button data-nav="matches" class="nav-link px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-orange-600 hover:bg-orange-50/60 transition flex items-center gap-1">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-orange-500"></i> AI Matches
+          </button>
+          <button data-nav="my-reports" class="nav-link px-3.5 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-orange-600 hover:bg-orange-50/60 transition">
+            My Reports
+          </button>
+        </nav>
+
+        <!-- Right Side: AI Status + User Profile Switcher + Action -->
+        <div class="flex items-center gap-3">
+          <div id="ai-status-badge" class="hidden sm:block">
+            <!-- Rendered by app.js -->
+          </div>
+
+          <!-- Student Profile Switcher -->
+          <div class="hidden lg:flex items-center gap-1.5 bg-slate-100/80 px-2 py-1 rounded-xl border border-slate-200/60 text-xs text-slate-600">
+            <i data-lucide="user" class="w-3.5 h-3.5 text-slate-400"></i>
+            <select id="user-selector" class="bg-transparent border-none text-xs font-semibold text-slate-700 focus:outline-none cursor-pointer">
+              <option value="usr_aarav">Aarav (Y22 CSE)</option>
+              <option value="usr_priya">Priya (Y21 EE)</option>
+              <option value="usr_rohit">Rohit (Y23 ME)</option>
+              <option value="usr_ananya">Ananya (Y22 BSBE)</option>
+            </select>
+          </div>
+
+          <!-- Report Item Primary Button -->
+          <button data-nav="report" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-orange-600 hover:bg-orange-700 text-white shadow-sm shadow-orange-600/30 transition">
+            <i data-lucide="plus" class="w-4 h-4"></i>
+            <span>Report Item</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="flex-grow">
+
+    <!-- ==================== VIEW 1: LANDING PAGE ==================== -->
+    <section id="view-landing" class="view-section">
+      
+      <!-- Hero Section -->
+      <div class="relative overflow-hidden pt-12 pb-20 lg:pt-16 lg:pb-24 bg-gradient-to-b from-orange-50/40 via-[#faf8f5] to-[#faf8f5]">
+        <div class="max-w-5xl mx-auto px-4 text-center">
+          
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-100/80 text-orange-800 text-xs font-semibold mb-6 border border-orange-200">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-orange-600"></i>
+            <span>Powered by Sarvam AI Multilingual Models</span>
+          </div>
+
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-navy-950 tracking-tight leading-tight mb-4">
+            Lost something on campus?<br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-600 via-amber-600 to-orange-500">
+              Let's find it together.
+            </span>
+          </h1>
+
+          <p class="max-w-2xl mx-auto text-base sm:text-lg text-slate-600 mb-8 leading-relaxed">
+            Describe your item in <strong>Hindi, English, or Hinglish</strong> using text or your voice. 
+            Khoj automatically understands your description and intelligently connects lost items with found belongings across IIT Kanpur.
+          </p>
+
+          <!-- Primary Hero Actions -->
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-3 mb-10">
+            <button data-nav="report" class="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-sm shadow-lg shadow-orange-600/20 transition flex items-center justify-center gap-2">
+              <i data-lucide="alert-circle" class="w-4 h-4"></i>
+              Report Lost Item
+            </button>
+            <button data-nav="report" class="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-white hover:bg-slate-50 text-slate-800 font-bold text-sm border border-slate-200 shadow-sm transition flex items-center justify-center gap-2">
+              <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i>
+              Report Found Item
+            </button>
+            <button data-nav="browse" class="w-full sm:w-auto px-6 py-3.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm transition flex items-center justify-center gap-2">
+              <i data-lucide="search" class="w-4 h-4"></i>
+              Search Campus
+            </button>
+          </div>
+
+          <!-- Hero Search Box -->
+          <div class="max-w-2xl mx-auto bg-white p-2.5 rounded-2xl border border-slate-200/90 shadow-xl shadow-slate-200/40 flex items-center gap-2">
+            <i data-lucide="search" class="w-5 h-5 text-slate-400 ml-2"></i>
+            <input type="text" id="hero-search-input" placeholder="e.g. 'black water bottle near library' or 'sac bag'..." class="w-full text-sm bg-transparent border-none focus:outline-none placeholder:text-slate-400 text-slate-800">
+            <button id="hero-search-btn" class="px-5 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold shrink-0 transition">
+              Search
+            </button>
+          </div>
+
+          <!-- Real Campus Data Stats -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-4xl mx-auto mt-14">
+            <div class="bg-white p-4 rounded-2xl border border-slate-200/70 card-shadow text-center">
+              <span id="stat-total" class="text-2xl font-black text-navy-950 block">0</span>
+              <span class="text-xs font-medium text-slate-500">Total Reports</span>
+            </div>
+            <div class="bg-white p-4 rounded-2xl border border-slate-200/70 card-shadow text-center">
+              <span id="stat-lost" class="text-2xl font-black text-rose-600 block">0</span>
+              <span class="text-xs font-medium text-slate-500">Active Lost Items</span>
+            </div>
+            <div class="bg-white p-4 rounded-2xl border border-slate-200/70 card-shadow text-center">
+              <span id="stat-found" class="text-2xl font-black text-emerald-600 block">0</span>
+              <span class="text-xs font-medium text-slate-500">Found Belongings</span>
+            </div>
+            <div class="bg-white p-4 rounded-2xl border border-slate-200/70 card-shadow text-center">
+              <span id="stat-matches" class="text-2xl font-black text-orange-600 block">0</span>
+              <span class="text-xs font-medium text-slate-500">AI Matches Found</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- How Khoj Works Section -->
+      <div class="py-16 bg-white border-y border-slate-200/70">
+        <div class="max-w-6xl mx-auto px-4">
+          <div class="text-center max-w-2xl mx-auto mb-12">
+            <span class="text-xs font-bold text-orange-600 uppercase tracking-widest">Simple & Intelligent</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-navy-950 mt-1">How Khoj Works</h2>
+            <p class="text-xs sm:text-sm text-slate-600 mt-2">Designed specifically for Indian college campuses where belongings are described in conversational Hindi, English, and Hinglish.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            
+            <div class="bg-[#faf8f5] p-5 rounded-2xl border border-slate-200/60 relative">
+              <div class="w-10 h-10 rounded-xl bg-orange-100 text-orange-700 flex items-center justify-center font-bold text-sm mb-4">
+                1
+              </div>
+              <h3 class="text-sm font-bold text-slate-900 mb-1">Speak or Type</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Describe your lost or found item naturally in your preferred language. You can speak into your microphone or type freely.
+              </p>
+            </div>
+
+            <div class="bg-[#faf8f5] p-5 rounded-2xl border border-slate-200/60 relative">
+              <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-sm mb-4">
+                2
+              </div>
+              <h3 class="text-sm font-bold text-slate-900 mb-1">Sarvam AI Understood</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Sarvam's 105B conversational model extracts structured attributes: item category, colors, locations, brands, and key features.
+              </p>
+            </div>
+
+            <div class="bg-[#faf8f5] p-5 rounded-2xl border border-slate-200/60 relative">
+              <div class="w-10 h-10 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center font-bold text-sm mb-4">
+                3
+              </div>
+              <h3 class="text-sm font-bold text-slate-900 mb-1">Explainable Matching</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Weighted algorithms compare category (30%), features (25%), color/brand (15%), location (15%), and time (15%) to rank high probability matches.
+              </p>
+            </div>
+
+            <div class="bg-[#faf8f5] p-5 rounded-2xl border border-slate-200/60 relative">
+              <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-sm mb-4">
+                4
+              </div>
+              <h3 class="text-sm font-bold text-slate-900 mb-1">Safe Verification</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                Claimants provide private verification proof before collection. Roll numbers and IDs are masked to protect student privacy.
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Recently Reported Items -->
+      <div class="py-16 max-w-6xl mx-auto px-4">
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <h2 class="text-xl font-bold text-navy-950">Recently Reported on Campus</h2>
+            <p class="text-xs text-slate-500">Live feed from around IIT Kanpur</p>
+          </div>
+          <button data-nav="browse" class="text-xs font-bold text-orange-600 hover:text-orange-700 flex items-center gap-1">
+            Browse All Reports <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <div id="landing-recent-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- Filled dynamically by app.js -->
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ==================== VIEW 2: BROWSE & SEARCH ==================== -->
+    <section id="view-browse" class="view-section hidden py-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Browse Header & Search Filters -->
+      <div class="bg-white p-5 rounded-3xl border border-slate-200/80 card-shadow mb-8">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+          <div>
+            <h2 class="text-xl font-extrabold text-navy-950">Campus Belongings Directory</h2>
+            <p class="text-xs text-slate-500">Filter through all lost and found reports at IIT Kanpur</p>
+          </div>
+
+          <!-- Quick Type Switch -->
+          <div class="flex items-center gap-1 bg-slate-100 p-1 rounded-2xl w-fit">
+            <select id="filter-type" class="bg-transparent text-xs font-bold text-slate-700 px-3 py-1.5 focus:outline-none cursor-pointer">
+              <option value="all">All Reports (Lost & Found)</option>
+              <option value="lost">Lost Items Only</option>
+              <option value="found">Found Items Only</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3 border-t border-slate-100">
+          <div>
+            <label class="text-[11px] font-semibold text-slate-500 block mb-1">Search Keywords</label>
+            <div class="relative">
+              <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-2.5"></i>
+              <input type="text" id="search-input" placeholder="Search bottle, bag, keys, library..." class="w-full text-xs pl-9 pr-3 py-2 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500">
+            </div>
+          </div>
+
+          <div>
+            <label class="text-[11px] font-semibold text-slate-500 block mb-1">Category</label>
+            <select id="filter-category" class="w-full text-xs px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500">
+              <option value="all">All Categories</option>
+              <option value="bottles">Water Bottles & Flasks</option>
+              <option value="wallets_bags">Wallets, Bags & Pouches</option>
+              <option value="id_cards">Student IDs & Cards</option>
+              <option value="electronics">Electronics (Laptops, AirPods, Watches)</option>
+              <option value="keys">Keys & Keychains</option>
+              <option value="books_stationery">Notebooks & Stationery</option>
+              <option value="clothing">Clothing & Umbrellas</option>
+              <option value="accessories">Glasses & Accessories</option>
+              <option value="others">Other Items</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="text-[11px] font-semibold text-slate-500 block mb-1">Campus Location</label>
+            <select id="filter-location" class="w-full text-xs px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500">
+              <option value="all">All Locations (IITK)</option>
+              <option value="PK Kelkar Library">PK Kelkar Library</option>
+              <option value="Lecture Hall Complex">Lecture Hall Complex (LHC)</option>
+              <option value="Student Activity Centre">Student Activity Centre (SAC)</option>
+              <option value="Pronite Ground">Pronite Ground / Main Ground</option>
+              <option value="Computer Centre">Computer Centre (CC)</option>
+              <option value="Health Centre">Health Centre (HC)</option>
+              <option value="Hall 1">Hall of Residence 1</option>
+              <option value="Hall 3">Hall of Residence 3</option>
+              <option value="Hall 12">Hall of Residence 12</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reports Card Grid -->
+      <div id="reports-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- Rendered by app.js -->
+      </div>
+
+      <!-- Empty State -->
+      <div id="reports-empty" class="hidden text-center py-20 bg-white rounded-3xl border border-slate-200/80 card-shadow">
+        <div class="w-14 h-14 rounded-2xl bg-orange-50 text-orange-600 flex items-center justify-center mx-auto mb-3">
+          <i data-lucide="package-search" class="w-7 h-7"></i>
+        </div>
+        <h3 class="text-base font-bold text-slate-800">No matching reports found</h3>
+        <p class="text-xs text-slate-500 max-w-sm mx-auto mt-1 mb-4">Try clearing filters or check back later. You can also report your item to be notified when a match is found.</p>
+        <button data-nav="report" class="px-4 py-2 rounded-xl text-xs font-bold bg-orange-600 text-white hover:bg-orange-700 transition">
+          Report Your Item
+        </button>
+      </div>
+
+    </section>
+
+    <!-- ==================== VIEW 3: REPORT AN ITEM ==================== -->
+    <section id="view-report" class="view-section hidden py-8 max-w-3xl mx-auto px-4">
+      <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/80 card-shadow">
+        
+        <div class="text-center max-w-md mx-auto mb-8">
+          <span class="text-xs font-bold text-orange-600 uppercase tracking-widest">IIT Kanpur Campus</span>
+          <h2 class="text-2xl font-black text-navy-950 mt-1">Submit a Report</h2>
+          <p class="text-xs text-slate-600 mt-1">
+            Describe your item in <strong>Hindi, English, or Hinglish</strong>. 
+            Speak into your mic or type — Sarvam AI will extract all details automatically!
+          </p>
+        </div>
+
+        <form id="report-form" class="space-y-6">
+
+          <!-- Report Type Selector (Lost vs Found) -->
+          <div>
+            <label class="text-xs font-bold text-slate-700 block mb-2">What happened?</label>
+            <div class="grid grid-cols-2 gap-3">
+              <label class="flex items-center justify-center gap-2 p-3.5 rounded-2xl border-2 border-slate-200 cursor-pointer has-[:checked]:border-rose-500 has-[:checked]:bg-rose-50/40 transition">
+                <input type="radio" name="report_type" value="lost" checked class="w-4 h-4 text-rose-600 focus:ring-rose-500">
+                <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                  <i data-lucide="help-circle" class="w-4 h-4 text-rose-600"></i> I Lost Something
+                </span>
+              </label>
+
+              <label class="flex items-center justify-center gap-2 p-3.5 rounded-2xl border-2 border-slate-200 cursor-pointer has-[:checked]:border-emerald-500 has-[:checked]:bg-emerald-50/40 transition">
+                <input type="radio" name="report_type" value="found" class="w-4 h-4 text-emerald-600 focus:ring-emerald-500">
+                <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                  <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i> I Found Something
+                </span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Feature 2: Voice Input Component (Sarvam STT) -->
+          <div class="bg-amber-50/50 p-4 rounded-2xl border border-amber-200/80">
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center gap-2">
+                <i data-lucide="mic" class="w-4 h-4 text-orange-600"></i>
+                <span class="text-xs font-bold text-slate-800">Voice Reporting (Sarvam Saaras STT)</span>
+              </div>
+              <span id="recording-timer" class="text-xs font-mono font-bold text-orange-600">00:00</span>
+            </div>
+            
+            <p class="text-[11px] text-slate-600 mb-3">
+              Record a 15-second audio description in Hindi or Hinglish. Sarvam's speech model will convert it into text.
+            </p>
+
+            <div class="flex items-center gap-2 flex-wrap">
+              <button type="button" id="btn-start-record" class="px-4 py-2 rounded-xl text-xs font-bold bg-orange-600 text-white hover:bg-orange-700 transition flex items-center gap-1.5 shadow-sm">
+                <i data-lucide="mic" class="w-3.5 h-3.5"></i>
+                Start Voice Recording
+              </button>
+
+              <button type="button" id="btn-stop-record" class="hidden px-4 py-2 rounded-xl text-xs font-bold bg-rose-600 text-white hover:bg-rose-700 transition flex items-center gap-1.5 recording-pulse">
+                <i data-lucide="square" class="w-3.5 h-3.5"></i>
+                Stop & Transcribe
+              </button>
+
+              <button type="button" id="btn-reset-record" class="hidden px-3 py-2 rounded-xl text-xs font-semibold bg-slate-200 text-slate-700 hover:bg-slate-300 transition">
+                Reset Audio
+              </button>
+
+              <div id="recording-indicator" class="hidden flex items-center gap-1.5 text-xs text-rose-600 font-bold">
+                <span class="w-2.5 h-2.5 rounded-full bg-rose-600 animate-ping"></span>
+                Listening...
+              </div>
+            </div>
+
+            <!-- Audio playback preview -->
+            <audio id="voice-preview-player" controls class="hidden w-full mt-3 h-8"></audio>
+            <div id="transcription-status" class="mt-2 text-xs"></div>
+          </div>
+
+          <!-- Feature 1: Multilingual Description Box + AI Extraction Trigger -->
+          <div>
+            <div class="flex items-center justify-between mb-1.5">
+              <label class="text-xs font-bold text-slate-800">
+                Detailed Description <span class="text-rose-500">*</span>
+              </label>
+              <div class="flex items-center gap-2">
+                <select id="report-lang" class="text-[11px] font-semibold bg-slate-100 border-none rounded-lg px-2 py-1 text-slate-700">
+                  <option value="Hinglish">Hinglish</option>
+                  <option value="Hindi">Hindi (हिंदी)</option>
+                  <option value="English">English</option>
+                </select>
+                <button type="button" id="btn-ai-extract" class="px-2.5 py-1 rounded-lg text-xs font-bold bg-orange-100 text-orange-800 hover:bg-orange-200 transition flex items-center gap-1" title="Use Sarvam AI to automatically extract attributes">
+                  <i data-lucide="sparkles" class="w-3 h-3 text-orange-600"></i> AI Auto-Fill
+                </button>
+              </div>
+            </div>
+
+            <textarea id="report-desc" rows="3" required placeholder="e.g. 'Mera black Milton water bottle kal shaam ko PK Kelkar Library ke first floor reading room mein chhut gaya tha. Uspe ek round space sticker laga hai.'" class="w-full text-xs sm:text-sm p-3.5 rounded-2xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-orange-500 transition leading-relaxed"></textarea>
+
+            <div id="ai-extraction-feedback" class="hidden mt-2">
+              <!-- Rendered by app.js -->
+            </div>
+          </div>
+
+          <!-- Extracted Fields Grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            
+            <div>
+              <label class="text-xs font-bold text-slate-800 block mb-1">
+                Item Title <span class="text-rose-500">*</span>
+              </label>
+              <input type="text" id="report-name" required placeholder="e.g. Milton Black Water Bottle" class="w-full text-xs p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500">
+            </div>
+
+            <div>
+              <label class="text-xs font-bold text-slate-800 block mb-1">
+                Category <span class="text-rose-500">*</span>
+              </label>
+              <select id="report-category" required class="w-full text-xs p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500 bg-white">
+                <option value="bottles">Water Bottles & Flasks</option>
+                <option value="wallets_bags">Wallets, Bags & Backpacks</option>
+                <option value="id_cards">Student ID Cards & Passes</option>
+                <option value="electronics">Electronics (Laptop, AirPods, Watch)</option>
+                <option value="keys">Keys & Keychains</option>
+                <option value="books_stationery">Notebooks & Stationery</option>
+                <option value="clothing">Jackets, Hoodies & Umbrellas</option>
+                <option value="accessories">Spectacles & Accessories</option>
+                <option value="others">Other Belongings</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="text-xs font-bold text-slate-800 block mb-1">
+                Campus Location <span class="text-rose-500">*</span>
+              </label>
+              <input type="text" id="report-location" required placeholder="e.g. PK Kelkar Library or Hall 1" class="w-full text-xs p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500">
+            </div>
+
+            <div>
+              <label class="text-xs font-bold text-slate-800 block mb-1">
+                Approximate Time
+              </label>
+              <input type="text" id="report-time" placeholder="e.g. Yesterday evening around 6 PM" class="w-full text-xs p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500">
+            </div>
+
+            <div>
+              <label class="text-xs font-bold text-slate-800 block mb-1">
+                Primary Colour
+              </label>
+              <input type="text" id="report-color" placeholder="e.g. Black, Navy Blue, Silver" class="w-full text-xs p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500">
+            </div>
+
+            <div>
+              <label class="text-xs font-bold text-slate-800 block mb-1">
+                Brand / Model
+              </label>
+              <input type="text" id="report-brand" placeholder="e.g. Milton, Wildcraft, Apple" class="w-full text-xs p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500">
+            </div>
+
+          </div>
+
+          <!-- Distinguishing Features -->
+          <div>
+            <label class="text-xs font-bold text-slate-800 block mb-1">
+              Distinguishing Features & Marks
+            </label>
+            <input type="text" id="report-features" placeholder="e.g. NASA sticker on cap, scratch at bottom, blue lanyard" class="w-full text-xs p-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-orange-500">
+            <span class="text-[11px] text-slate-500 block mt-1">
+              <i data-lucide="shield" class="w-3 h-3 inline text-slate-400 mr-0.5"></i>
+              Privacy protected: Student roll numbers and private IDs are automatically masked from public feeds.
+            </span>
+          </div>
+
+          <!-- Photo Upload (Optional) -->
+          <div>
+            <label class="text-xs font-bold text-slate-800 block mb-1.5">
+              Photograph (Optional)
+            </label>
+            <div class="flex items-center gap-3">
+              <input type="file" id="item-photo-input" accept="image/png,image/jpeg,image/webp" class="text-xs text-slate-500 file:mr-3 file:py-2 file:px-3.5 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100 cursor-pointer">
+              <span id="photo-upload-status" class="text-xs text-slate-500"></span>
+            </div>
+            <input type="hidden" id="report-photo-url">
+            <div id="photo-preview" class="hidden mt-3 w-32 h-32 rounded-xl overflow-hidden border border-slate-200 bg-slate-50">
+              <img id="photo-preview-img" src="" class="w-full h-full object-cover" alt="Preview">
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="pt-4 border-t border-slate-100">
+            <button type="submit" id="btn-submit-report" class="w-full py-3.5 rounded-2xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-sm shadow-md shadow-orange-600/30 transition flex items-center justify-center gap-2">
+              Submit Report
+            </button>
+          </div>
+
+        </form>
+
+      </div>
+    </section>
+
+    <!-- ==================== VIEW 4: MATCHES PAGE ==================== -->
+    <section id="view-matches" class="view-section hidden py-8 max-w-6xl mx-auto px-4">
+      
+      <div class="bg-white p-6 rounded-3xl border border-slate-200/80 card-shadow mb-8">
+        <div class="flex items-center justify-between gap-4 flex-wrap">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="p-2 rounded-xl bg-orange-100 text-orange-700"><i data-lucide="sparkles" class="w-5 h-5"></i></span>
+              <h2 class="text-xl font-extrabold text-navy-950">Intelligent Item Matches</h2>
+            </div>
+            <p class="text-xs text-slate-500 mt-1">
+              Sarvam AI extracted attributes compared using our explainable weighted matching engine.
+            </p>
+          </div>
+          <button onclick="loadMatches()" class="px-3.5 py-2 rounded-xl text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 transition flex items-center gap-1.5">
+            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i> Refresh Matches
+          </button>
+        </div>
+      </div>
+
+      <div id="matches-grid" class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <!-- Rendered by app.js -->
+      </div>
+
+      <div id="matches-empty" class="hidden text-center py-20 bg-white rounded-3xl border border-slate-200/80 card-shadow">
+        <div class="w-14 h-14 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-3">
+          <i data-lucide="layers" class="w-7 h-7"></i>
+        </div>
+        <h3 class="text-base font-bold text-slate-800">No active matches identified yet</h3>
+        <p class="text-xs text-slate-500 max-w-sm mx-auto mt-1 mb-4">When complementary Lost and Found reports are filed, Khoj will rank them here.</p>
+        <button data-nav="report" class="px-4 py-2 rounded-xl text-xs font-bold bg-orange-600 text-white hover:bg-orange-700 transition">
+          Report an Item
+        </button>
+      </div>
+
+    </section>
+
+    <!-- ==================== VIEW 5: MY REPORTS ==================== -->
+    <section id="view-my-reports" class="view-section hidden py-8 max-w-5xl mx-auto px-4">
+      
+      <div class="bg-white p-6 rounded-3xl border border-slate-200/80 card-shadow mb-8">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h2 class="text-xl font-extrabold text-navy-950">My Campus Reports</h2>
+            <p class="text-xs text-slate-500">Track and manage reports you have published</p>
+          </div>
+          <button data-nav="report" class="px-4 py-2.5 rounded-xl text-xs font-bold bg-orange-600 text-white hover:bg-orange-700 transition flex items-center gap-1.5 self-start sm:self-auto">
+            <i data-lucide="plus" class="w-4 h-4"></i> New Report
+          </button>
+        </div>
+      </div>
+
+      <div id="my-reports-list" class="space-y-4">
+        <!-- Rendered by app.js -->
+      </div>
+
+      <div id="my-reports-empty" class="hidden text-center py-16 bg-white rounded-3xl border border-slate-200/80 card-shadow">
+        <div class="w-12 h-12 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-3">
+          <i data-lucide="file-question" class="w-6 h-6"></i>
+        </div>
+        <h3 class="text-sm font-bold text-slate-800">No reports found for this student profile</h3>
+        <p class="text-xs text-slate-500 mt-1 mb-4">Switch profiles in the top bar to test another user or create a new report.</p>
+        <button data-nav="report" class="px-4 py-2 rounded-xl text-xs font-bold bg-orange-600 text-white hover:bg-orange-700 transition">
+          Create Report
+        </button>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ==================== MODALS ==================== -->
+
+  <!-- Modal 1: Report Detail Modal -->
+  <div id="report-detail-modal" class="hidden fixed inset-0 z-50 overflow-y-auto modal-backdrop flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full card-shadow overflow-hidden transform transition-all" id="report-detail-content">
+      <!-- Content populated by app.js -->
+    </div>
+  </div>
+
+  <!-- Modal 2: Match Detail & Verification Modal -->
+  <div id="match-detail-modal" class="hidden fixed inset-0 z-50 overflow-y-auto modal-backdrop flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-2xl w-full card-shadow overflow-hidden transform transition-all" id="match-detail-content">
+      <!-- Content populated by app.js -->
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200/80 py-8 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-xl bg-orange-600 flex items-center justify-center text-white">
+            <i data-lucide="compass" class="w-4 h-4"></i>
+          </div>
+          <div>
+            <span class="font-extrabold text-sm text-navy-950">KHOJ</span>
+            <p class="text-[11px] text-slate-500">IIT Kanpur Campus Lost & Found • Powered by Sarvam AI</p>
+          </div>
+        </div>
+
+        <!-- Demo Data Controls for Testing -->
+        <div class="flex items-center gap-2">
+          <button onclick="handleSeedDemoData()" class="px-3 py-1.5 rounded-xl text-[11px] font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition flex items-center gap-1">
+            <i data-lucide="database" class="w-3 h-3 text-slate-500"></i> Load Demo Data
+          </button>
+          <button onclick="handleResetDemoData()" class="px-3 py-1.5 rounded-xl text-[11px] font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 transition flex items-center gap-1">
+            <i data-lucide="rotate-ccw" class="w-3 h-3 text-slate-500"></i> Reset Demo Data
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Logic -->
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
